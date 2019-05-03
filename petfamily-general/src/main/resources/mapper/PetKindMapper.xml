@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyd.petfamily.dao.PetKindMapper" >
+  <resultMap id="BaseResultMap" type="com.zyd.petfamily.domain.pojo.PetKind" >
+    <constructor >
+      <idArg column="pet_kind_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="kind_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pet_kind_id, kind_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pet_kind
+    where pet_kind_id = #{petKindId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pet_kind
+    where pet_kind_id = #{petKindId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zyd.petfamily.domain.pojo.PetKind" >
+    insert into pet_kind (pet_kind_id, kind_name)
+    values (#{petKindId,jdbcType=INTEGER}, #{kindName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyd.petfamily.domain.pojo.PetKind" >
+    insert into pet_kind
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="petKindId != null" >
+        pet_kind_id,
+      </if>
+      <if test="kindName != null" >
+        kind_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="petKindId != null" >
+        #{petKindId,jdbcType=INTEGER},
+      </if>
+      <if test="kindName != null" >
+        #{kindName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyd.petfamily.domain.pojo.PetKind" >
+    update pet_kind
+    <set >
+      <if test="kindName != null" >
+        kind_name = #{kindName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pet_kind_id = #{petKindId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zyd.petfamily.domain.pojo.PetKind" >
+    update pet_kind
+    set kind_name = #{kindName,jdbcType=VARCHAR}
+    where pet_kind_id = #{petKindId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * FROM pet_kind
+  </select>
+</mapper>

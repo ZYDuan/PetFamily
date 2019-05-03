@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyd.petfamily.dao.FosterOrderPetMapper">
+    <resultMap id="BaseResultMap" type="com.zyd.petfamily.domain.pojo.FosterOrderPet">
+        <constructor>
+            <idArg column="order_pet_id" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+            <arg column="pet_id" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+            <arg column="order_id" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+            <arg column="order_pet_money" jdbcType="REAL" javaType="java.lang.Float"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    order_pet_id, pet_id, order_id, order_pet_money
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from foster_order_pet
+        where order_pet_id = #{orderPetId,jdbcType=TINYINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from foster_order_pet
+    where order_pet_id = #{orderPetId,jdbcType=TINYINT}
+  </delete>
+    <insert id="insert" parameterType="com.zyd.petfamily.domain.pojo.FosterOrderPet" useGeneratedKeys="true"
+            keyProperty="orderPetId">
+    insert into foster_order_pet (order_pet_id, pet_id, order_id, 
+      order_pet_money)
+    values (#{orderPetId,jdbcType=TINYINT}, #{petId,jdbcType=TINYINT}, #{orderId,jdbcType=TINYINT}, 
+      #{orderPetMoney,jdbcType=REAL})
+  </insert>
+    <insert id="insertSelective" parameterType="com.zyd.petfamily.domain.pojo.FosterOrderPet">
+        insert into foster_order_pet
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderPetId != null">
+                order_pet_id,
+            </if>
+            <if test="petId != null">
+                pet_id,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="orderPetMoney != null">
+                order_pet_money,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderPetId != null">
+                #{orderPetId,jdbcType=TINYINT},
+            </if>
+            <if test="petId != null">
+                #{petId,jdbcType=TINYINT},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=TINYINT},
+            </if>
+            <if test="orderPetMoney != null">
+                #{orderPetMoney,jdbcType=REAL},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zyd.petfamily.domain.pojo.FosterOrderPet">
+        update foster_order_pet
+        <set>
+            <if test="petId != null">
+                pet_id = #{petId,jdbcType=TINYINT},
+            </if>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=TINYINT},
+            </if>
+            <if test="orderPetMoney != null">
+                order_pet_money = #{orderPetMoney,jdbcType=REAL},
+            </if>
+        </set>
+        where order_pet_id = #{orderPetId,jdbcType=TINYINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zyd.petfamily.domain.pojo.FosterOrderPet">
+    update foster_order_pet
+    set pet_id = #{petId,jdbcType=TINYINT},
+      order_id = #{orderId,jdbcType=TINYINT},
+      order_pet_money = #{orderPetMoney,jdbcType=REAL}
+    where order_pet_id = #{orderPetId,jdbcType=TINYINT}
+  </update>
+
+    <resultMap id="OrderPetMap" type="com.zyd.petfamily.domain.Response.OrderPetResponse">
+        <result property="petId" column="pet_id"/>
+        <result property="petName" column="pet_name"/>
+        <result property="petMoney" column="order_pet_money"/>
+    </resultMap>
+
+    <select id="selectByOrder" parameterType="java.lang.Integer" resultMap="OrderPetMap">
+    select fop.pet_id,pi.pet_name, fop.order_pet_money
+    from foster_order_pet as fop, pet_info as pi where fop.order_id = #{orderId} and fop.pet_id = pi.pet_id
+  </select>
+</mapper>

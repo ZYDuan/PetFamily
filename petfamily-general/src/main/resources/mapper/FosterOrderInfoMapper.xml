@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyd.petfamily.dao.FosterOrderInfoMapper">
+    <resultMap id="BaseResultMap" type="com.zyd.petfamily.domain.pojo.FosterOrderInfo">
+        <constructor>
+            <idArg column="order_info_id" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+            <arg column="order_start" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="order_end" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="order_money" jdbcType="REAL" javaType="java.lang.Float"/>
+            <arg column="order_remark" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="pay_time" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="order_id" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+            <arg column="order_status" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    order_info_id, order_start, order_end, order_money, order_remark, create_time, pay_time, 
+    order_id, order_status
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from foster_order_info
+        where order_info_id = #{orderInfoId,jdbcType=TINYINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from foster_order_info
+    where order_info_id = #{orderInfoId,jdbcType=TINYINT}
+  </delete>
+    <insert id="insert" parameterType="com.zyd.petfamily.domain.pojo.FosterOrderInfo" useGeneratedKeys="true"
+            keyProperty="orderInfoId">
+    insert into foster_order_info (order_info_id, order_start, order_end, 
+      order_money, order_remark, create_time, 
+      pay_time, order_id, order_status)
+    values (#{orderInfoId,jdbcType=TINYINT}, #{orderStart,jdbcType=TIMESTAMP}, #{orderEnd,jdbcType=TIMESTAMP}, 
+      #{orderMoney,jdbcType=REAL}, #{orderRemark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{payTime,jdbcType=TIMESTAMP}, #{orderId,jdbcType=TINYINT}, #{orderStatus, jdbcType=TINYINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.zyd.petfamily.domain.pojo.FosterOrderInfo">
+        insert into foster_order_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderInfoId != null">
+                order_info_id,
+            </if>
+            <if test="orderStart != null">
+                order_start,
+            </if>
+            <if test="orderEnd != null">
+                order_end,
+            </if>
+            <if test="orderMoney != null">
+                order_money,
+            </if>
+            <if test="orderRemark != null">
+                order_remark,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="payTime != null">
+                pay_time,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="orderStatus != null">
+                order_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderInfoId != null">
+                #{orderInfoId,jdbcType=TINYINT},
+            </if>
+            <if test="orderStart != null">
+                #{orderStart,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderEnd != null">
+                #{orderEnd,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderMoney != null">
+                #{orderMoney,jdbcType=REAL},
+            </if>
+            <if test="orderRemark != null">
+                #{orderRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payTime != null">
+                #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=TINYINT},
+            </if>
+            <if test="orderStatus != null">
+                #{orderStatus,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zyd.petfamily.domain.pojo.FosterOrderInfo">
+        update foster_order_info
+        <set>
+            <if test="orderStart != null">
+                order_start = #{orderStart,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderEnd != null">
+                order_end = #{orderEnd,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderMoney != null">
+                order_money = #{orderMoney,jdbcType=REAL},
+            </if>
+            <if test="orderRemark != null">
+                order_remark = #{orderRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="payTime != null">
+                pay_time = #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=TINYINT},
+            </if>
+            <if test="orderStatus != null">
+                order_status = #{orderStatus,jdbcType=TINYINT},
+            </if>
+        </set>
+        where order_info_id = #{orderInfoId,jdbcType=TINYINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zyd.petfamily.domain.pojo.FosterOrderInfo">
+    update foster_order_info
+    set order_start = #{orderStart,jdbcType=TIMESTAMP},
+      order_end = #{orderEnd,jdbcType=TIMESTAMP},
+      order_money = #{orderMoney,jdbcType=REAL},
+      order_remark = #{orderRemark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      order_id = #{orderId,jdbcType=TINYINT},
+       order_status = #{orderStatus,jdbcType=TINYINT}
+    where order_info_id = #{orderInfoId,jdbcType=TINYINT}
+  </update>
+
+    <select id="selectByOrder" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from foster_order_info
+        where order_id = #{orderId}
+    </select>
+</mapper>

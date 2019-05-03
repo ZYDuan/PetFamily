@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyd.petfamily.dao.PetInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.zyd.petfamily.domain.pojo.PetInfo" >
+    <constructor >
+      <idArg column="pet_id" jdbcType="TINYINT" javaType="java.lang.Integer" />
+      <arg column="pet_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="pet_birthday" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="pet_pic" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="pet_kind" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="pet_sex" jdbcType="SMALLINT" javaType="java.lang.Integer" />
+      <arg column="pet_weight" jdbcType="REAL" javaType="java.lang.Float" />
+      <arg column="pet_spay" jdbcType="SMALLINT" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="TINYINT" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pet_id, pet_name, pet_birthday, pet_pic, pet_kind, pet_sex, pet_weight, pet_spay, 
+    user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pet_info
+    where pet_id = #{petId,jdbcType=TINYINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pet_info
+    where pet_id = #{petId,jdbcType=TINYINT}
+  </delete>
+  <insert id="insert" parameterType="com.zyd.petfamily.domain.pojo.PetInfo" useGeneratedKeys="true" keyProperty="petId">
+    insert into pet_info (pet_id, pet_name, pet_birthday, 
+      pet_pic, pet_kind, pet_sex, 
+      pet_weight, pet_spay, user_id
+      )
+    values (#{petId,jdbcType=TINYINT}, #{petName,jdbcType=VARCHAR}, #{petBirthday,jdbcType=TIMESTAMP}, 
+      #{petPic,jdbcType=VARCHAR}, #{petKind,jdbcType=INTEGER}, #{petSex,jdbcType=SMALLINT}, 
+      #{petWeight,jdbcType=REAL}, #{petSpay,jdbcType=SMALLINT}, #{userId,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyd.petfamily.domain.pojo.PetInfo" >
+    insert into pet_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="petId != null" >
+        pet_id,
+      </if>
+      <if test="petName != null" >
+        pet_name,
+      </if>
+      <if test="petBirthday != null" >
+        pet_birthday,
+      </if>
+      <if test="petPic != null" >
+        pet_pic,
+      </if>
+      <if test="petKind != null" >
+        pet_kind,
+      </if>
+      <if test="petSex != null" >
+        pet_sex,
+      </if>
+      <if test="petWeight != null" >
+        pet_weight,
+      </if>
+      <if test="petSpay != null" >
+        pet_spay,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="petId != null" >
+        #{petId,jdbcType=TINYINT},
+      </if>
+      <if test="petName != null" >
+        #{petName,jdbcType=VARCHAR},
+      </if>
+      <if test="petBirthday != null" >
+        #{petBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="petPic != null" >
+        #{petPic,jdbcType=VARCHAR},
+      </if>
+      <if test="petKind != null" >
+        #{petKind,jdbcType=INTEGER},
+      </if>
+      <if test="petSex != null" >
+        #{petSex,jdbcType=SMALLINT},
+      </if>
+      <if test="petWeight != null" >
+        #{petWeight,jdbcType=REAL},
+      </if>
+      <if test="petSpay != null" >
+        #{petSpay,jdbcType=SMALLINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyd.petfamily.domain.pojo.PetInfo" >
+    update pet_info
+    <set >
+      <if test="petName != null" >
+        pet_name = #{petName,jdbcType=VARCHAR},
+      </if>
+      <if test="petBirthday != null" >
+        pet_birthday = #{petBirthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="petPic != null" >
+        pet_pic = #{petPic,jdbcType=VARCHAR},
+      </if>
+      <if test="petKind != null" >
+        pet_kind = #{petKind,jdbcType=INTEGER},
+      </if>
+      <if test="petSex != null" >
+        pet_sex = #{petSex,jdbcType=SMALLINT},
+      </if>
+      <if test="petWeight != null" >
+        pet_weight = #{petWeight,jdbcType=REAL},
+      </if>
+      <if test="petSpay != null" >
+        pet_spay = #{petSpay,jdbcType=SMALLINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=TINYINT},
+      </if>
+    </set>
+    where pet_id = #{petId,jdbcType=TINYINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zyd.petfamily.domain.pojo.PetInfo" >
+    update pet_info
+    set pet_name = #{petName,jdbcType=VARCHAR},
+      pet_birthday = #{petBirthday,jdbcType=TIMESTAMP},
+      pet_pic = #{petPic,jdbcType=VARCHAR},
+      pet_kind = #{petKind,jdbcType=INTEGER},
+      pet_sex = #{petSex,jdbcType=SMALLINT},
+      pet_weight = #{petWeight,jdbcType=REAL},
+      pet_spay = #{petSpay,jdbcType=SMALLINT},
+      user_id = #{userId,jdbcType=TINYINT}
+    where pet_id = #{petId,jdbcType=TINYINT}
+  </update>
+
+  <select id="selectByUser" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pet_info where user_id = #{userId}
+  </select>
+</mapper>

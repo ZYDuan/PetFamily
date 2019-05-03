@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyd.petfamily.dao.FamilyServeMapper">
+    <resultMap id="BaseResultMap" type="com.zyd.petfamily.domain.pojo.FamilyServe">
+        <constructor>
+            <idArg column="family_serve_id" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+            <arg column="serve_pet_kind" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="serve_pet_money" jdbcType="REAL" javaType="java.lang.Float"/>
+            <arg column="family_info_id" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+        </constructor>
+    </resultMap>
+
+    <resultMap id="PetKindMap" type="com.zyd.petfamily.domain.Response.PetServeResponse">
+        <result property="familyServeId" column="family_serve_id"/>
+        <result property="servePetKind" column="serve_pet_kind"/>
+        <result property="servePetMoney" column="serve_pet_money"/>
+        <result property="familyInfoId" column="family_info_id"/>
+        <result property="kindName" column="kind_name"/>
+    </resultMap>
+
+    <resultMap id="ServePetMap" type="com.zyd.petfamily.domain.Response.OrderPetResponse">
+        <result property="petId" column="pet_id"/>
+        <result property="petName" column="pet_name"/>
+        <result property="petMoney" column="serve_pet_money"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    family_serve_id, serve_pet_kind, serve_pet_money, family_info_id
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from family_serve
+        where family_serve_id = #{familyServeId,jdbcType=TINYINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from family_serve
+    where family_serve_id = #{familyServeId,jdbcType=TINYINT}
+  </delete>
+    <insert id="insert" parameterType="com.zyd.petfamily.domain.pojo.FamilyServe" useGeneratedKeys="true"
+            keyProperty="familyServeId">
+    insert into family_serve (family_serve_id, serve_pet_kind, serve_pet_money, 
+      family_info_id)
+    values (#{familyServeId,jdbcType=TINYINT}, #{servePetKind,jdbcType=INTEGER}, #{servePetMoney,jdbcType=REAL}, 
+      #{familyInfoId,jdbcType=TINYINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.zyd.petfamily.domain.pojo.FamilyServe">
+        insert into family_serve
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="familyServeId != null">
+                family_serve_id,
+            </if>
+            <if test="servePetKind != null">
+                serve_pet_kind,
+            </if>
+            <if test="servePetMoney != null">
+                serve_pet_money,
+            </if>
+            <if test="familyInfoId != null">
+                family_info_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="familyServeId != null">
+                #{familyServeId,jdbcType=TINYINT},
+            </if>
+            <if test="servePetKind != null">
+                #{servePetKind,jdbcType=INTEGER},
+            </if>
+            <if test="servePetMoney != null">
+                #{servePetMoney,jdbcType=REAL},
+            </if>
+            <if test="familyInfoId != null">
+                #{familyInfoId,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zyd.petfamily.domain.pojo.FamilyServe">
+        update family_serve
+        <set>
+            <if test="servePetKind != null">
+                serve_pet_kind = #{servePetKind,jdbcType=INTEGER},
+            </if>
+            <if test="servePetMoney != null">
+                serve_pet_money = #{servePetMoney,jdbcType=REAL},
+            </if>
+            <if test="familyInfoId != null">
+                family_info_id = #{familyInfoId,jdbcType=TINYINT},
+            </if>
+        </set>
+        where family_serve_id = #{familyServeId,jdbcType=TINYINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zyd.petfamily.domain.pojo.FamilyServe">
+    update family_serve
+    set serve_pet_kind = #{servePetKind,jdbcType=INTEGER},
+      serve_pet_money = #{servePetMoney,jdbcType=REAL},
+      family_info_id = #{familyInfoId,jdbcType=TINYINT}
+    where family_serve_id = #{familyServeId,jdbcType=TINYINT}
+  </update>
+    <select id="selectByFamilyId" parameterType="java.lang.Integer" resultMap="PetKindMap">
+    select family_serve_id, fs.serve_pet_kind, serve_pet_money,
+      family_info_id, kind_name from family_serve as fs, pet_kind as pk where fs.serve_pet_kind = pk.pet_kind_id and family_info_id = #{familyId}
+  </select>
+
+    <delete id="deleteByFamily" parameterType="java.lang.Integer">
+        delete from family_serve where family_info_id = #{familyId}
+    </delete>
+
+    <select id="selectServePet" parameterType="java.lang.Integer" resultMap="ServePetMap">
+      select p.pet_id, p.pet_name, f.serve_pet_money
+      from family_serve as f, pet_info as p
+      where p.user_id = #{userId} and f.family_info_id = #{familyId} and f.serve_pet_kind = p.pet_kind
+    </select>
+</mapper>

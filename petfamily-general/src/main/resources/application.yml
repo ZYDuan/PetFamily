@@ -1,0 +1,46 @@
+spring:
+  # 数据库相关配置
+  datasource:
+    url: jdbc:mysql://120.79.138.25:3306/pet_family?useUnicode=true&characterEncoding=UTF-8&useSSL=false&useTimezone=true&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    username: root
+    password: zyd2288778.
+    driver-class-name: com.mysql.jdbc.Driver
+    initialSize: 1
+    minIdle: 1
+    maxActive: 5
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 180000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+  redis:
+    database: 0
+    host: 120.79.138.25
+    port: 6379
+    password: 12345678
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+
+# mybaties 配置
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+  typeAliasesPackage: com.zyd.petfamily.domain.pojo
+# 通用mapper 配置 自动生成dao层代码
+mapper:
+  plugin: tk.mybatis.mapper.generator.MapperPlugin
+  Mapper: tk.mybatis.mapper.common.Mapper
+  not-empty: false
+  identity: MYSQL
+logging:
+  level:
+   com.zyd.petfamily.dao: DEBUG
+   com.zyd.petfamily.*: DEBUG
+  file: petfamily.log
+server:
+  port: 8080

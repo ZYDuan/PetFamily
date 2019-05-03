@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zyd.petfamily.dao.FamilyInfoMapper">
+  <resultMap id="BaseResultMap" type="com.zyd.petfamily.domain.pojo.FamilyInfo">
+    <constructor>
+      <idArg column="family_info_id" javaType="java.lang.Integer" jdbcType="TINYINT" />
+      <arg column="family_address" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="family_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="family_lat" javaType="java.lang.Double" jdbcType="DECIMAL" />
+      <arg column="family_lng" javaType="java.lang.Double" jdbcType="DECIMAL" />
+      <arg column="family_detail" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="family_comment_star" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="family_phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="family_comment_count" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    family_info_id, family_address, family_name, family_lat, family_lng, family_detail, 
+    family_comment_star, user_id, family_phone, family_comment_count
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from family_info
+    where family_info_id = #{familyInfoId,jdbcType=TINYINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from family_info
+    where family_info_id = #{familyInfoId,jdbcType=TINYINT}
+  </delete>
+  <insert id="insert" parameterType="com.zyd.petfamily.domain.pojo.FamilyInfo" useGeneratedKeys="true"
+          keyProperty="familyInfoId">
+    insert into family_info (family_info_id, family_address, family_name, 
+      family_lat, family_lng, family_detail, 
+      family_comment_star, user_id, family_phone, family_comment_count)
+    values (#{familyInfoId,jdbcType=TINYINT}, #{familyAddress,jdbcType=VARCHAR}, #{familyName,jdbcType=VARCHAR}, 
+      #{familyLat,jdbcType=DECIMAL}, #{familyLng,jdbcType=DECIMAL}, #{familyDetail,jdbcType=VARCHAR}, 
+      #{familyCommentStar,jdbcType=DOUBLE}, #{userId,jdbcType=INTEGER}, #{familyPhone,jdbcType=VARCHAR},
+      #{familyCommentCount,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyd.petfamily.domain.pojo.FamilyInfo">
+    insert into family_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="familyInfoId != null">
+        family_info_id,
+      </if>
+      <if test="familyAddress != null">
+        family_address,
+      </if>
+      <if test="familyName != null">
+        family_name,
+      </if>
+      <if test="familyLat != null">
+        family_lat,
+      </if>
+      <if test="familyLng != null">
+        family_lng,
+      </if>
+      <if test="familyDetail != null">
+        family_detail,
+      </if>
+      <if test="familyCommentStar != null">
+        family_comment_star,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="familyPhone != null">
+        family_phone
+      </if>
+      <if test="familyCommentCount != null">
+        family_comment_count
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="familyInfoId != null">
+        #{familyInfoId,jdbcType=TINYINT},
+      </if>
+      <if test="familyAddress != null">
+        #{familyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="familyName != null">
+        #{familyName,jdbcType=VARCHAR},
+      </if>
+      <if test="familyLat != null">
+        #{familyLat,jdbcType=DECIMAL},
+      </if>
+      <if test="familyLng != null">
+        #{familyLng,jdbcType=DECIMAL},
+      </if>
+      <if test="familyDetail != null">
+        #{familyDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="familyCommentStar != null">
+        #{familyCommentStar,jdbcType=DOUBLE},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="familyPhone != null">
+        #{familyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="familyCommentCount != null">
+        #{familyCommentCount,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyd.petfamily.domain.pojo.FamilyInfo">
+    update family_info
+    <set>
+      <if test="familyAddress != null">
+        family_address = #{familyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="familyName != null">
+        family_name = #{familyName,jdbcType=VARCHAR},
+      </if>
+      <if test="familyLat != null">
+        family_lat = #{familyLat,jdbcType=DECIMAL},
+      </if>
+      <if test="familyLng != null">
+        family_lng = #{familyLng,jdbcType=DECIMAL},
+      </if>
+      <if test="familyDetail != null">
+        family_detail = #{familyDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="familyCommentStar != null">
+        family_comment_star = #{familyCommentStar,jdbcType=DOUBLE},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="familyPhone != null">
+        family_phone = #{familyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="familyCommentCount != null">
+        family_comment_count = #{familyCommentCount,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where family_info_id = #{familyInfoId,jdbcType=TINYINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zyd.petfamily.domain.pojo.FamilyInfo">
+    update family_info
+    set family_address = #{familyAddress,jdbcType=VARCHAR},
+      family_name = #{familyName,jdbcType=VARCHAR},
+      family_lat = #{familyLat,jdbcType=DECIMAL},
+      family_lng = #{familyLng,jdbcType=DECIMAL},
+      family_detail = #{familyDetail,jdbcType=VARCHAR},
+      family_comment_star = #{familyCommentStar,jdbcType=DOUBLE},
+      user_id = #{userId,jdbcType=INTEGER},
+      family_phone = #{familyPhone,jdbcType=VARCHAR},
+      family_comment_count = #{familyCommentCount,jdbcType=INTEGER}
+    where family_info_id = #{familyInfoId,jdbcType=TINYINT}
+  </update>
+
+  <select id="selectByUser" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from family_info
+    where user_id = #{userId}
+  </select>
+</mapper>

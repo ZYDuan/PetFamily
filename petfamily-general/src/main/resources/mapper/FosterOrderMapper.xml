@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyd.petfamily.dao.FosterOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.zyd.petfamily.domain.pojo.FosterOrder" >
+    <constructor >
+      <idArg column="order_id" jdbcType="TINYINT" javaType="java.lang.Integer" />
+      <arg column="family_id" jdbcType="TINYINT" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="TINYINT" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <resultMap id="OrderPetInfoMap" type="com.zyd.petfamily.domain.Response.OrderResponse">
+    <result property="orderInfoId" column="order_id"/>
+    <result property="userId" column="user_id"/>
+    <result property="familyId" column="family_id"/>
+    <result property="orderStart" column="order_start"/>
+    <result property="orderEnd" column="order_end"/>
+    <result property="orderMoney" column="order_money"/>
+    <result property="orderRemark" column="order_remark"/>
+    <result property="createTime" column="create_time"/>
+    <result property="payTime" column="pay_time"/>
+    <result property="orderStatus" column="order_status"/>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    order_id, family_id, user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from foster_order
+    where order_id = #{orderId,jdbcType=TINYINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from foster_order
+    where order_id = #{orderId,jdbcType=TINYINT}
+  </delete>
+  <insert id="insert" parameterType="com.zyd.petfamily.domain.pojo.FosterOrder" useGeneratedKeys="true" keyProperty="orderId">
+    insert into foster_order (order_id, family_id, user_id
+      )
+    values (#{orderId,jdbcType=TINYINT}, #{familyId,jdbcType=TINYINT}, #{userId,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyd.petfamily.domain.pojo.FosterOrder" >
+    insert into foster_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="familyId != null" >
+        family_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=TINYINT},
+      </if>
+      <if test="familyId != null" >
+        #{familyId,jdbcType=TINYINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyd.petfamily.domain.pojo.FosterOrder" >
+    update foster_order
+    <set >
+      <if test="familyId != null" >
+        family_id = #{familyId,jdbcType=TINYINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=TINYINT},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=TINYINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zyd.petfamily.domain.pojo.FosterOrder" >
+    update foster_order
+    set family_id = #{familyId,jdbcType=TINYINT},
+      user_id = #{userId,jdbcType=TINYINT}
+    where order_id = #{orderId,jdbcType=TINYINT}
+  </update>
+
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="OrderPetInfoMap">
+    select fo.order_id, fo.user_id, fo.family_id, foi.order_start, foi.order_end,
+      foi.order_money, foi.order_remark, foi.create_time,
+      foi.pay_time, foi.order_status
+    from foster_order as fo, foster_order_info as foi
+    where fo.user_id = #{userId} and fo.order_id = foi.order_id
+  </select>
+
+  <select id="selectSignleByOrder" parameterType="java.lang.Integer" resultMap="OrderPetInfoMap">
+    select fo.order_id, fo.user_id, fo.family_id, foi.order_start, foi.order_end,
+    foi.order_money, foi.order_remark, foi.create_time,
+    foi.pay_time, foi.order_status
+    from foster_order as fo, foster_order_info as foi
+    where fo.order_id = #{orderId} and fo.order_id = foi.order_id
+  </select>
+
+
+  <select id="selectByFamilyId" parameterType="java.lang.Integer" resultMap="OrderPetInfoMap">
+    select fo.order_id, fo.user_id, fo.family_id, foi.order_start, foi.order_end,
+    foi.order_money, foi.order_remark, foi.create_time,
+    foi.pay_time, foi.order_status
+    from foster_order as fo, foster_order_info as foi
+    where fo.family_id = #{family_id} and fo.order_id = foi.order_id
+  </select>
+</mapper>
