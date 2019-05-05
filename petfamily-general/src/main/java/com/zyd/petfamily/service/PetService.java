@@ -5,11 +5,13 @@ import com.zyd.petfamily.domain.pojo.PetInfo;
 import com.zyd.petfamily.domain.pojo.PetKind;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface PetService {
     /**
      * 获取宠物信息
+     *
      * @param petId
      * @return
      */
@@ -17,14 +19,15 @@ public interface PetService {
 
     /**
      * 存储新的宠物信息
+     *
      * @param petInfo
-     * @param petPic
      * @return
      */
-    boolean insertPet(PetInfo petInfo, MultipartFile petPic);
+    boolean insertPet(PetInfo petInfo) throws IOException;
 
     /**
      * 更新宠物信息
+     *
      * @param petInfo
      * @return
      */
@@ -32,6 +35,7 @@ public interface PetService {
 
     /**
      * 删除宠物信息
+     *
      * @param petId
      * @return
      */
@@ -39,12 +43,14 @@ public interface PetService {
 
     /**
      * 获取宠物种类
+     *
      * @return
      */
     List<PetKind> selectPetKind();
 
     /**
      * 获取某个用户的所有宠物信息
+     *
      * @param userId
      * @return
      */
@@ -52,8 +58,8 @@ public interface PetService {
 
     /**
      * 更新宠物信息和图片
+     *
      * @param petInfo
-     * @param petPic
      */
-    void updatePetWithPic(PetInfo petInfo, MultipartFile petPic);
+    void updatePetWithPic(PetInfo petInfo) throws IOException;
 }

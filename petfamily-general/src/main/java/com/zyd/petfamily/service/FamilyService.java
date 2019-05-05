@@ -2,11 +2,13 @@ package com.zyd.petfamily.service;
 
 import com.zyd.petfamily.domain.Request.FamilyInfoRequest;
 import com.zyd.petfamily.domain.Response.CommentResponse;
+import com.zyd.petfamily.domain.Response.FamilyResponse;
 import com.zyd.petfamily.domain.Response.PetServeResponse;
 import com.zyd.petfamily.domain.pojo.FamilyInfo;
 import com.zyd.petfamily.domain.pojo.FamilyServe;
 
 import java.util.List;
+import java.util.Queue;
 
 public interface FamilyService {
 
@@ -43,11 +45,13 @@ public interface FamilyService {
 
 
     /**
-     * 获取所有家庭宠物信息
+     * 获取定位附近的家庭宠物信息
      *
      * @return
+     * @param lng
+     * @param lat
      */
-    List<FamilyInfoRequest> familyInfoList();
+    Queue<FamilyResponse> familyInfoList(Double lng, Double lat);
 
     /**
      * 查看某个宠物家庭信息

@@ -9,7 +9,7 @@
     </constructor>
   </resultMap>
   <resultMap id="OrderPetInfoMap" type="com.zyd.petfamily.domain.Response.OrderResponse">
-    <result property="orderInfoId" column="order_id"/>
+    <result property="orderId" column="order_id"/>
     <result property="userId" column="user_id"/>
     <result property="familyId" column="family_id"/>
     <result property="orderStart" column="order_start"/>
@@ -92,7 +92,7 @@
     where fo.user_id = #{userId} and fo.order_id = foi.order_id
   </select>
 
-  <select id="selectSignleByOrder" parameterType="java.lang.Integer" resultMap="OrderPetInfoMap">
+  <select id="selectSingleByOrder" parameterType="java.lang.Integer" resultMap="OrderPetInfoMap">
     select fo.order_id, fo.user_id, fo.family_id, foi.order_start, foi.order_end,
     foi.order_money, foi.order_remark, foi.create_time,
     foi.pay_time, foi.order_status

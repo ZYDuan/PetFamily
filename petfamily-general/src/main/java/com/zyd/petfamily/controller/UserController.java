@@ -92,9 +92,10 @@ public class UserController {
      * @return
      */
     @RequestMapping("/active")
-    public void active(Integer userId) {
+    public String active(Integer userId) {
         log.info("激活用户" + userId);
         userServerImpl.active(userId);
+        return "您已激活成功！";
     }
 
     /**

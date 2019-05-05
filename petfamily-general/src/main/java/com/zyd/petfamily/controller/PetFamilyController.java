@@ -2,6 +2,7 @@ package com.zyd.petfamily.controller;
 
 import com.zyd.petfamily.domain.Request.FamilyInfoRequest;
 import com.zyd.petfamily.domain.Response.CommentResponse;
+import com.zyd.petfamily.domain.Response.FamilyResponse;
 import com.zyd.petfamily.domain.Response.PetServeResponse;
 import com.zyd.petfamily.domain.common.CommonResponse;
 import com.zyd.petfamily.domain.pojo.FamilyComment;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Queue;
 
 /**
  * @program: petfamily
@@ -184,4 +186,25 @@ public class PetFamilyController {
         return new CommonResponse(CodeUtil.FAILE_CODE, "该家庭暂无评论");
     }
 
+    /**
+     * 查询定点附近的宠物家庭信息
+     *
+     * @param lat
+     * @param lng
+     * @return
+     */
+    @RequestMapping("/searchFamily")
+    public CommonResponse searchFamily(Double lng, Double lat){
+        log.info("查询经度为{}，纬度为{} 附近的家庭信息", lng, lat);
+
+        Queue<FamilyResponse> familyList = familyServiceImpl.familyInfoList(lng, lat);
+
+        if (familyList == null || familyList.size() == 0) {
+            log.error("暂无寄养家庭");
+            return new CommonResponse(CodeUtil.FAILE_CODE, "附近暂无寄养家庭");
+        }
+
+        return new CommonResponse(CodeUtil.SUCCESS_CODE, familyList, CodeUtil.SUCCESS_MSG);
+
+    }
 }

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,15 +43,14 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public boolean insertPet(PetInfo petInfo, MultipartFile petPic) {
+    public boolean insertPet(PetInfo petInfo) throws IOException {
         //将图片存储url设置到宠物信息中
-        PicUtil picUtil = new PicUtil(petPic);
+        PicUtil picUtil = new PicUtil(petInfo.getPetPic());
         //将宠物数据存储到数据库中
         petInfoMapper.insert(petInfo);
-
         petInfo.setPetPic(picUtil.storePic("pet", petInfo.getUserId(), petInfo.getPetId()));
 
-        petInfoMapper.updateByPrimaryKey(petInfo);
+        petInfoMapper.updateByPrimaryKeySelective(petInfo);
         return true;
     }
 
@@ -62,6 +62,7 @@ public class PetServiceImpl implements PetService {
         if (oldPetInfo == null)
             return false;
         //更新旧数据
+        petInfo.setPetPic(petInfo.getPetPic());
         petInfoMapper.updateByPrimaryKey(petInfo);
         return true;
     }
@@ -89,14 +90,14 @@ public class PetServiceImpl implements PetService {
     }
 
     @Override
-    public void updatePetWithPic(PetInfo petInfo, MultipartFile petPic) {
+    public void updatePetWithPic(PetInfo petInfo) throws IOException {
         //获取旧数据
         PetInfo oldPetInfo = petInfoMapper.selectByPrimaryKey(petInfo.getPetId());
         //获得旧图片存放路径
         String oldUrl = oldPetInfo.getPetPic();
         String url = CodeUtil.PIC_URL + petInfo.getUserId() + "/pet" + oldUrl.substring(oldUrl.lastIndexOf("/"));
         //删除旧照片并存放新照片
-        PicUtil picUtil = new PicUtil(petPic);
+        PicUtil picUtil = new PicUtil(petInfo.getPetPic());
         picUtil.deletePic(url);
         petInfo.setPetPic(picUtil.storePic("pet", petInfo.getUserId(), petInfo.getPetId()));
         petInfoMapper.updateByPrimaryKey(petInfo);

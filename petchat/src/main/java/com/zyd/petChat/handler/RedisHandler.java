@@ -5,6 +5,8 @@ import com.zyd.petChat.domain.ChatResponse;
 import com.zyd.petChat.redis.Constant;
 import com.zyd.petChat.redis.RedisPool;
 import io.netty.channel.ChannelHandlerContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 
 import java.util.Date;
@@ -18,6 +20,8 @@ import java.util.Date;
 public class RedisHandler {
     private static String ONLINE_REDIS ="online";
     private static Jedis jedis = RedisPool.getJedis();
+
+    private static Logger logger = LoggerFactory.getLogger(RedisHandler.class);
 
     /**
      * 向redis 插入在线聊天记录
@@ -48,6 +52,7 @@ public class RedisHandler {
         long time = date.getTime();
         //插入聊天记录
         //1. 分别插入两者的聊天对象列表
+        logger.info("插入{} 和 {} 的聊天记录", userName, targetName);
         jedis.zadd(userName, time, targetName);
         jedis.zadd(targetName, time, userName);
         //2. 将聊天记录插入到两者到聊天记录列表中

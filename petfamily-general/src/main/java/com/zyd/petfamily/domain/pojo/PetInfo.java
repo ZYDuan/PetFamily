@@ -24,7 +24,10 @@ public class PetInfo {
 
     private Integer userId;
 
-    public PetInfo(Integer petId, String petName, Date petBirthday, String petPic, Integer petKind, Integer petSex, Float petWeight, Integer petSpay, Integer userId) {
+    private String petIntro;
+
+    public PetInfo(Integer petId, String petName, Date petBirthday, String petPic,
+                   Integer petKind, Integer petSex, Float petWeight, Integer petSpay, Integer userId, String petIntro) {
         this.petId = petId;
         this.petName = petName;
         this.petBirthday = petBirthday;
@@ -34,10 +37,19 @@ public class PetInfo {
         this.petWeight = petWeight;
         this.petSpay = petSpay;
         this.userId = userId;
+        this.petIntro = petIntro;
     }
 
     public PetInfo() {
         super();
+    }
+
+    public String getPetIntro() {
+        return petIntro;
+    }
+
+    public void setPetIntro(String petIntro) {
+        this.petIntro = petIntro;
     }
 
     public Integer getPetId() {

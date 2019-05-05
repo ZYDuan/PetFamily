@@ -103,7 +103,7 @@
   </update>
 
   <select id="selectByFamily" parameterType="java.lang.Integer" resultMap="CommentMap">
-    select comment_id, comment_content, family_info_id, f.user_id, comment_star, user_name
+    select comment_id, comment_content, family_info_id, user_id, comment_star, user_name
     from family_comment as f, user as u
     where f.family_info_id = #{familyId} and f.user_id = u.user_id
   </select>

@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import sun.jvm.hotspot.utilities.BitMap;
+import sun.misc.BASE64Decoder;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import static com.zyd.petfamily.utils.CodeUtil.PIC_URL;
@@ -27,7 +30,7 @@ public class PicUtil {
 
     private static PicUtil picUtil;
 
-    private MultipartFile pic;
+    private String pic;
 
     public PicUtil() {
     }
@@ -38,7 +41,7 @@ public class PicUtil {
         picUtil.environment = this.environment;
     }
 
-    public PicUtil(MultipartFile pic) {
+    public PicUtil(String pic) {
         this.pic = pic;
     }
 
@@ -56,31 +59,38 @@ public class PicUtil {
      * @param id
      * @return 图片url
      */
-    public String storePic(String kind, int userId, int id) {
+    public String storePic(String kind, int userId, int id) throws IOException {
         log.info("存储图片到服务器中");
 
-        //过滤合法的图片类型
-        String fileName = pic.getOriginalFilename();
-        String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
-        String allowSuffixs = "gif,jpg,jpeg,bmp,png,ico";
-        if (allowSuffixs.indexOf(suffix) == -1) {
-            return null;
-        }
         //创建新目录
         String idPre = userId + "/" + kind + "/";
         File dir = new File(PIC_URL + idPre);
         if (!dir.exists()) {
             dir.mkdirs();
         }
+        String filePathSuffix = id + ".jpg";
 
-        String filePathSuffix = id + "." + suffix;
         //创建服务器目录下的新文件
         String newFilePath = dir.getPath() + "/" + filePathSuffix;
-        File f = new File(newFilePath);
+        File picFile = new File(newFilePath);
+        if (!picFile.exists()) {
+            picFile.createNewFile();
+        }
 
-        // 转存文件
         try {
-            pic.transferTo(f);
+            // 对base64数据进行解码 生成 字节数组
+            byte[] picImg = new BASE64Decoder().decodeBuffer(pic);
+            for (int i = 0; i < picImg.length; ++i) {
+                if (picImg[i] < 0) {
+                    // 调整异常数据
+                    picImg[i] += 256;
+                }
+            }
+            //将图片数据写入文件
+            FileOutputStream out = new FileOutputStream(picFile);
+            out.write(picImg);
+            out.flush();
+            out.close();
         } catch (IOException e) {
             log.error("存储图片出现错误");
             e.printStackTrace();
@@ -102,4 +112,5 @@ public class PicUtil {
         file.delete();
         return true;
     }
+
 }

@@ -12,8 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sun.jvm.hotspot.utilities.BitMap;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -62,22 +64,18 @@ public class PetController {
     /**
      * 注册宠物信息
      *
-     * @param petData
-     * @param petPic
+     * @param petInfo
      * @return
      */
     @RequestMapping("/register")
-    public CommonResponse register(@RequestParam("petData") String petData,
-                                   @RequestParam("petPic") MultipartFile petPic) {
+    public CommonResponse register(@RequestBody PetInfo petInfo) throws IOException {
         log.info("注册新的宠物信息");
 
         //将json字符串转化为petinfo对象
-        PetInfo petInfo = JsonUtil.fromJson(petData, PetInfo.class);
-        if (!petPic.isEmpty()) {
-            petServiceImpl.insertPet(petInfo, petPic);
+        if (petInfo != null) {
+            petServiceImpl.insertPet(petInfo);
         }
         return new CommonResponse(CodeUtil.SUCCESS_CODE, CodeUtil.SUCCESS_MSG);
-
     }
 
     /**
@@ -88,7 +86,6 @@ public class PetController {
     @RequestMapping("/update")
     public CommonResponse update(@RequestBody PetInfo petInfo) {
         log.info("更新宠物信息");
-
         petServiceImpl.updatePet(petInfo);
         return new CommonResponse(CodeUtil.SUCCESS_CODE, CodeUtil.SUCCESS_MSG);
 
@@ -100,13 +97,10 @@ public class PetController {
      * @return
      */
     @RequestMapping("/updateWithPic")
-    public CommonResponse updateWithPic(@RequestParam("petData") String petData,
-                                        @RequestParam("petPic") MultipartFile petPic) {
+    public CommonResponse updateWithPic(@RequestBody PetInfo petInfo) throws IOException {
         log.info("更新宠物信息和相关图片");
 
-        //将json字符串转化为petinfo对象
-        PetInfo petInfo = JsonUtil.fromJson(petData, PetInfo.class);
-        petServiceImpl.updatePetWithPic(petInfo, petPic);
+        petServiceImpl.updatePetWithPic(petInfo);
         return new CommonResponse(CodeUtil.SUCCESS_CODE, CodeUtil.SUCCESS_MSG);
 
     }

@@ -24,6 +24,7 @@ public class PetInfoResponse extends PetInfo {
         this.setPetWeight(info.getPetWeight());
         this.setUserId(info.getUserId());
         this.setPetSpay(info.getPetSpay());
+        this.setPetIntro(info.getPetIntro());
     }
     public String getKindName() {
         return kindName;

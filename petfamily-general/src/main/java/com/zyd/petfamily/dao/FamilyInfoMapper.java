@@ -3,6 +3,8 @@ package com.zyd.petfamily.dao;
 import com.zyd.petfamily.domain.Request.FamilyInfoRequest;
 import com.zyd.petfamily.domain.pojo.FamilyInfo;
 
+import java.util.List;
+
 public interface FamilyInfoMapper {
     int deleteByPrimaryKey(Integer familyInfoId);
 
@@ -17,4 +19,6 @@ public interface FamilyInfoMapper {
     int updateByPrimaryKey(FamilyInfo record);
 
     FamilyInfo selectByUser(Integer userId);
+
+    List<FamilyInfo> selectAll();
 }

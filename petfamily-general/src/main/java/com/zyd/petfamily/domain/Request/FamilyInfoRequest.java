@@ -20,6 +20,18 @@ public class FamilyInfoRequest extends FamilyInfo {
         return familyServeDetail;
     }
 
+    public FamilyInfoRequest(){
+
+    }
+    public FamilyInfoRequest(Integer familyInfoId, String familyAddress, String familyName, Double familyLat, Double familyLng, String familyDetail, Double familyCommentStar, Integer userId, String familyPhone, Integer familyCommentCount, List<FamilyServe> familyServeDetail) {
+        super(familyInfoId, familyAddress, familyName, familyLat, familyLng, familyDetail, familyCommentStar, userId, familyPhone, familyCommentCount);
+        this.familyServeDetail = familyServeDetail;
+    }
+
+    public FamilyInfoRequest(List<FamilyServe> familyServeDetail) {
+        this.familyServeDetail = familyServeDetail;
+    }
+
     public void setFamilyServeDetail(List<FamilyServe> familyServeDetail) {
         this.familyServeDetail = familyServeDetail;
     }

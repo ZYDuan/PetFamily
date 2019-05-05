@@ -159,4 +159,10 @@
     from family_info
     where user_id = #{userId}
   </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from family_info
+  </select>
 </mapper>
