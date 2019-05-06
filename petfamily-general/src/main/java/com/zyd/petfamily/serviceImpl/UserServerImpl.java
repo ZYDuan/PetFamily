@@ -49,7 +49,7 @@ public class UserServerImpl implements UserServer {
         User selectUser = userMapper.selectByName(user.getUserName());
         //判断是否相等
         if (selectUser != null && selectUser.getUserPwd().equals(user.getUserPwd())) {
-            user = selectUser;
+            user.setUserValid(selectUser.getUserValid());
             return true;
         }
         return false;

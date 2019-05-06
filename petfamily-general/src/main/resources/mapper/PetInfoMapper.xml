@@ -7,12 +7,12 @@
             <arg column="pet_name" jdbcType="VARCHAR" javaType="java.lang.String"/>
             <arg column="pet_birthday" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
             <arg column="pet_pic" jdbcType="VARCHAR" javaType="java.lang.String"/>
-            <arg column="pet_intro" jdbcType="VARCHAR" javaType="java.lang.String"/>
             <arg column="pet_kind" jdbcType="INTEGER" javaType="java.lang.Integer"/>
             <arg column="pet_sex" jdbcType="SMALLINT" javaType="java.lang.Integer"/>
             <arg column="pet_weight" jdbcType="REAL" javaType="java.lang.Float"/>
             <arg column="pet_spay" jdbcType="SMALLINT" javaType="java.lang.Integer"/>
             <arg column="user_id" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+            <arg column="pet_intro" jdbcType="VARCHAR" javaType="java.lang.String"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">

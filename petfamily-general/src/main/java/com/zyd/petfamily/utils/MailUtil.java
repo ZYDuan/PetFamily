@@ -1,5 +1,6 @@
 package com.zyd.petfamily.utils;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.ResourceUtils;
 
 import javax.mail.Session;
@@ -20,7 +21,7 @@ public class MailUtil {
 
     public static void sendActiveMail(String userMail, String userName, Integer userId) throws Exception {
         //导入邮件配置信息
-        InputStream in = new FileInputStream(ResourceUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX + "properties/mail.properties"));
+        InputStream in = new ClassPathResource("properties/mail.properties").getInputStream();
         Properties props = new Properties();
         props.load(in);
 
@@ -28,7 +29,12 @@ public class MailUtil {
         Properties mailProps = new Properties();
         mailProps.setProperty("mail.transport.protocol", props.getProperty("mail.transport.protocol"));
         mailProps.setProperty("mail.smtp.host", props.getProperty("mail.smtp.host"));
-        mailProps.setProperty("mail.stmp.auth", props.getProperty("mail.stmp.auth"));
+        mailProps.setProperty("mail.smtp.auth", props.getProperty("mail.smtp.auth"));
+        //邮箱发送服务器端口,这里设置为465端口
+        mailProps.setProperty("mail.smtp.port", props.getProperty("mail.smtp.port"));
+        mailProps.setProperty("mail.smtp.socketFactory.port", props.getProperty("mail.smtp.socketFactory.port"));
+        mailProps.setProperty("mail.smtp.socketFactory.fallback", props.getProperty("mail.smtp.socketFactory.fallback"));
+        mailProps.put("mail.smtp.socketFactory.class", props.getProperty("mail.smtp.socketFactory.class"));
 
         String account = props.getProperty("mail.account");
         String password = props.getProperty("mail.password");
@@ -47,7 +53,7 @@ public class MailUtil {
         message.setSubject("宠物寄养家庭平台注册", "UTF-8");
 
         //Content: 邮件正文（可以使用html标签）
-        message.setContent("<a href=http://localhost:8080/petfamily/user/active/" + userId + "> 账号激活链接 </a>", "text/html;charset=UTF-8");
+        message.setContent("<a href= " + CodeUtil.getLocalUrl() + ":8080/user/active?userId=" + userId + "> 账号激活链接 </a>", "text/html;charset=UTF-8");
 
         //设置显示的发件时间
         message.setSentDate(new Date());

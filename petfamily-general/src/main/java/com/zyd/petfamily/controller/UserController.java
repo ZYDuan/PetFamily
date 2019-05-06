@@ -95,7 +95,7 @@ public class UserController {
     public String active(Integer userId) {
         log.info("激活用户" + userId);
         userServerImpl.active(userId);
-        return "您已激活成功！";
+        return "The account has been actived successfully!";
     }
 
     /**
@@ -123,7 +123,7 @@ public class UserController {
     public CommonResponse update(@RequestBody User user){
         log.info("修改用户{} 的信息", user.getUserId());
         if(userServerImpl.updateUser(user)){
-            return new CommonResponse(CodeUtil.SUCCESS_CODE, user, "发送激活邮件成功！");
+            return new CommonResponse(CodeUtil.SUCCESS_CODE, user, "修改成功！");
         }
         return new CommonResponse(CodeUtil.FAILE_CODE, CodeUtil.FAILE_MSG);
     }

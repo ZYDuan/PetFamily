@@ -23,7 +23,7 @@ public class CodeUtil {
     public static int ORDER_COMPLETE = 3;
 
     //图片存放的目录
-    public static String PIC_URL = "/Users/zyd/Pictures/static/img/pet/";
+    public static String PIC_URL = "/usr/local/petfamily/static/img/pet/";
 
     /**
      * 获取服务器ip地址

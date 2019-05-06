@@ -89,9 +89,10 @@ public class ChatServiceImpl implements ChatService {
         //构造聊天记录的数据信息
         List<ChatMsg> res = new ArrayList<>();
         for (String msg : chatMsgs) {
+            System.out.println(msg);
             int timeIndex = msg.indexOf(":");
             int nameIndex = msg.indexOf(":", timeIndex + 1);
-            ChatMsg chatMsg = new ChatMsg(msg.substring(timeIndex + 1, nameIndex), new Date(zset.rank(msgKey, msg).longValue()),
+            ChatMsg chatMsg = new ChatMsg(msg.substring(timeIndex + 1, nameIndex), new Date(Long.valueOf(msg.substring(0, timeIndex))),
                     msg.substring(nameIndex + 1, msg.length()));
             res.add(chatMsg);
         }
@@ -106,6 +107,8 @@ public class ChatServiceImpl implements ChatService {
      */
     private String getMsg(String oldMsg) {
         String[] valPattern = oldMsg.split(":");
+        if (valPattern.length <= 2)
+            return "";
         return oldMsg.substring(valPattern[0].length() + valPattern[1].length() + 2);
     }
 }

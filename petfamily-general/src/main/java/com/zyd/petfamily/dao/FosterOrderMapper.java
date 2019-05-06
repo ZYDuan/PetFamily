@@ -20,7 +20,7 @@ public interface FosterOrderMapper {
 
     List<OrderResponse> selectByUserId(Integer userId);
 
-    OrderResponse selectSignleByOrder(Integer orderId);
+    List<OrderResponse> selectSingleByOrder(Integer orderId);
 
     List<OrderResponse> selectByFamilyId(Integer familyId);
 }

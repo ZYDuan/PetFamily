@@ -6,15 +6,10 @@ import com.zyd.petfamily.domain.pojo.PetInfo;
 import com.zyd.petfamily.domain.pojo.PetKind;
 import com.zyd.petfamily.service.PetService;
 import com.zyd.petfamily.utils.CodeUtil;
-import com.zyd.petfamily.utils.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import sun.jvm.hotspot.utilities.BitMap;
-
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 

@@ -64,7 +64,8 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.insert(order);
 
         //向数据库中插入订单详细数据
-        FosterOrderInfo orderInfo = new FosterOrderInfo(null, orderRequest.getOrderStart(), orderRequest.getOrderEnd(), orderRequest.getOrderMoney(),
+        FosterOrderInfo orderInfo = new FosterOrderInfo(null, orderRequest.getOrderStart(),
+                orderRequest.getOrderEnd(), orderRequest.getOrderMoney(),
                 orderRequest.getOrderRemark(), new Date(), null, order.getOrderId(), CodeUtil.ORDER_UNPAY);
 
         orderInfoMapper.insert(orderInfo);
@@ -72,7 +73,8 @@ public class OrderServiceImpl implements OrderService {
         //插入订单中选中的宠物
         List<OrderPetResponse> orderPets = orderRequest.getPetList();
         for (OrderPetResponse orderPet : orderPets) {
-            FosterOrderPet pet = new FosterOrderPet(null, orderPet.getPetId(), order.getOrderId(), orderPet.getPetMoney());
+            FosterOrderPet pet = new FosterOrderPet(null,
+                    orderPet.getPetId(), order.getOrderId(), orderPet.getPetMoney());
             orderPetMapper.insert(pet);
         }
         return true;
@@ -135,11 +137,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderResponse getOrderById(Integer orderId) {
-        OrderResponse order = orderMapper.selectSignleByOrder(orderId);
-
-        //判断是否存在
-        if (order == null)
+        List<OrderResponse> orders = orderMapper.selectSingleByOrder(orderId);
+        //判断订单信息是否存在
+        if (orders == null || orders.size() != 1)
             return null;
+
+        OrderResponse order = orders.get(0);
 
         //根据下订单的用户id获取用户信息
         User user = userMapper.selectByPrimaryKey(order.getUserId());
@@ -201,11 +204,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public boolean offerComment(CommentRequest commentRequest) {
         //根据评论所属的订单id获取订单信息
-        OrderResponse order = orderMapper.selectSignleByOrder(commentRequest.getOrderId());
+        List<OrderResponse> orders = orderMapper.selectSingleByOrder(commentRequest.getOrderId());
         //判断订单信息是否存在
-        if (order == null)
+        if (orders == null || orders.size() != 1)
             return false;
 
+        OrderResponse order = orders.get(0);
         //构建订单评论
         FamilyComment comment = new FamilyComment(null, commentRequest.getCommentContent(),
                 order.getFamilyId(), order.getUserId(), commentRequest.getCommentStar());
