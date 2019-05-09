@@ -21,4 +21,6 @@ public interface FamilyInfoMapper {
     FamilyInfo selectByUser(Integer userId);
 
     List<FamilyInfo> selectAll();
+
+    int deleteByUserId(Integer userId);
 }

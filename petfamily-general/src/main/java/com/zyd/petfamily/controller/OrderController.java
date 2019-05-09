@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,6 +42,8 @@ public class OrderController {
     @RequestMapping("/create")
     public CommonResponse createOrder(@RequestBody OrderRequest orderRequest) {
         log.info("创建订单");
+        if (orderRequest.getOrderStart().before(new Date()) || orderRequest.getOrderStart().after(orderRequest.getOrderEnd()))
+            return new CommonResponse(CodeUtil.FAILE_CODE, "订单时间输入不符合逻辑");
         if (orderServiceImpl.createOrder(orderRequest))
             return new CommonResponse(CodeUtil.SUCCESS_CODE, CodeUtil.SUCCESS_MSG);
 

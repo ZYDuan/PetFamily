@@ -71,14 +71,14 @@ public class PetFamilyController {
     /**
      * 删除宠物家庭信息
      *
-     * @param familyId
+     * @param userId
      * @return
      */
-    @RequestMapping("/delete")
-    public CommonResponse delete(Integer familyId) {
+    @RequestMapping("/layout")
+    public CommonResponse delete(Integer userId) {
         log.info("删除宠物家庭信息");
 
-        familyServiceImpl.deleteFamily(familyId);
+        familyServiceImpl.deleteFamily(userId);
 
         return new CommonResponse(CodeUtil.SUCCESS_CODE, CodeUtil.SUCCESS_MSG);
     }

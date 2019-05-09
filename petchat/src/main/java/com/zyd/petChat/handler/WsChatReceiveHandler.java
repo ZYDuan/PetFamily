@@ -87,7 +87,7 @@ public class WsChatReceiveHandler extends SimpleChannelInboundHandler<WebSocketF
             Constant.onlineUserMap.put(chatMsg.getUserName(), ctx);
         else if (chatMsg.getType().equals(Constant.LEAVE_TYPE))
             remove(ctx);
-        else {
+        else if (chatMsg.getType().equals(Constant.SEND_TYPE)){
             //获取客户端的ip地址
             InetSocketAddress address = (InetSocketAddress) ctx.channel().remoteAddress();
             //向在线聊天列表插入数据

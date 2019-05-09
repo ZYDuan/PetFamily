@@ -30,10 +30,10 @@ public interface FamilyService {
     /**
      * 删除宠物家庭信息
      *
-     * @param familyId
+     * @param userId
      * @return
      */
-    boolean deleteFamily(Integer familyId);
+    boolean deleteFamily(Integer userId);
 
     /**
      * 查看某个用户的宠物家庭信息

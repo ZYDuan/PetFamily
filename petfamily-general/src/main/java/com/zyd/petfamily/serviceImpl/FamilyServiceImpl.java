@@ -79,8 +79,8 @@ public class FamilyServiceImpl implements FamilyService {
     }
 
     @Override
-    public boolean deleteFamily(Integer familyId) {
-        familyInfoMapper.deleteByPrimaryKey(familyId);
+    public boolean deleteFamily(Integer userId) {
+        familyInfoMapper.deleteByUserId(userId);
         return true;
     }
 

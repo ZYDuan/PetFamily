@@ -113,7 +113,7 @@ public class PetController {
         PetInfo petInfo = petServiceImpl.selectPet(petId);
         if (petInfo != null)
             return new CommonResponse(CodeUtil.SUCCESS_CODE, petInfo, CodeUtil.SUCCESS_MSG);
-        return new CommonResponse(CodeUtil.FAILE_CODE, CodeUtil.FAILE_MSG);
+        return new CommonResponse(CodeUtil.FAILE_CODE, "id对应的宠物信息不存在");
     }
 
     /**

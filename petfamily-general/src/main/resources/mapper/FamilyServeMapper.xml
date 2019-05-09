@@ -109,6 +109,6 @@
     <select id="selectServePet" parameterType="java.lang.Integer" resultMap="ServePetMap">
       select p.pet_id, p.pet_name, f.serve_pet_money
       from family_serve as f, pet_info as p
-      where p.user_id = #{userId} and f.family_id = #{familyId} and f.serve_pet_kind = p.pet_kind
+      where p.user_id = #{userId} and f.family_info_id = #{familyId} and f.serve_pet_kind = p.pet_kind
     </select>
 </mapper>

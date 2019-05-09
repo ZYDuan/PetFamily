@@ -31,12 +31,13 @@ public class CodeUtil {
      * @return ip地址
      */
     public static String getLocalUrl() {
-        InetAddress localHost = null;
-        try {
-            localHost = Inet4Address.getLocalHost();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        return "http://" + localHost.getHostAddress();
+//        InetAddress localHost = null;
+//        try {
+//            localHost = Inet4Address.getLocalHost();
+//        } catch (UnknownHostException e) {
+//            e.printStackTrace();
+//        }
+//        return "http://" + localHost.getHostAddress();
+        return "http://120.79.138.25";
     }
 }

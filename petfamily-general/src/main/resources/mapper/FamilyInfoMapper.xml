@@ -165,4 +165,9 @@
     <include refid="Base_Column_List" />
     from family_info
   </select>
+
+  <delete id="deleteByUserId" parameterType="java.lang.Integer">
+     delete from family_info
+    where user_id = #{userId,jdbcType=TINYINT}
+  </delete>
 </mapper>

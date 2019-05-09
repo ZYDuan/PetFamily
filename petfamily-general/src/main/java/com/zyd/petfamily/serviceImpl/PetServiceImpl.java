@@ -38,7 +38,10 @@ public class PetServiceImpl implements PetService {
     @Override
     public PetInfo selectPet(Integer petId) {
         PetInfo petInfo = petInfoMapper.selectByPrimaryKey(petId);
+        if (petInfo == null)
+            return null;
         PetKind kind = petKindMapper.selectByPrimaryKey(petInfo.getPetKind());
+
         return new PetInfoResponse(petInfo, kind.getKindName());
     }
 
