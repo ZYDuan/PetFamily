@@ -14,9 +14,9 @@ public class RedisPool {
     //Redis服务器IP
     private static String ADDR = "120.79.138.25";
     //Redis的端口号
-    private static Integer PORT = 6379;
+    private static Integer PORT = 6060;
     //访问密码
-    private static String AUTH = "12345678";
+    private static String AUTH = "2288778";
 
     //可用连接实例的最大数目，默认为8；
     //如果赋值为-1，则表示不限制，如果pool已经分配了maxActive个jedis实例，则此时pool的状态为exhausted(耗尽)

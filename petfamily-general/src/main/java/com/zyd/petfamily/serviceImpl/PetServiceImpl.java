@@ -49,6 +49,7 @@ public class PetServiceImpl implements PetService {
     public boolean insertPet(PetInfo petInfo) throws IOException {
         //将图片存储url设置到宠物信息中
         PicUtil picUtil = new PicUtil(petInfo.getPetPic());
+        petInfo.setPetPic(null);
         //将宠物数据存储到数据库中
         petInfoMapper.insert(petInfo);
         petInfo.setPetPic(picUtil.storePic("pet", petInfo.getUserId(), petInfo.getPetId()));

@@ -18,8 +18,8 @@ spring:
   redis:
     database: 0
     host: 120.79.138.25
-    port: 6379
-    password: 12345678
+    port: 6060
+    password: 2288778
     jedis:
       pool:
         max-active: 8

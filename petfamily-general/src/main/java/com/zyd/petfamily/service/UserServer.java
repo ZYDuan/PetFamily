@@ -36,4 +36,11 @@ public interface UserServer {
      * @return
      */
     boolean updateUser(User user);
+
+    /**
+     * 根据用户id获取用户名称
+     * @param userId
+     * @return
+     */
+    String getUserName(Integer userId);
 }

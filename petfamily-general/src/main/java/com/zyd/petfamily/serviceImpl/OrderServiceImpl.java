@@ -170,8 +170,8 @@ public class OrderServiceImpl implements OrderService {
             orderInfo.setOrderStatus(CodeUtil.ORDER_PAY);
             Date payDate = new Date();
 
-            //判断支付时间是否在订单开始之前
-            if (payDate.after(orderInfo.getOrderStart()))
+            //判断支付时间是否在订单创建之后或订单完成之前
+            if (payDate.before(orderInfo.getCreateTime()) || payDate.after(orderInfo.getOrderEnd()))
                 return false;
             orderInfo.setPayTime(payDate);
             orderInfoMapper.updateByPrimaryKey(orderInfo);

@@ -50,6 +50,7 @@ public class UserServerImpl implements UserServer {
         //判断是否相等
         if (selectUser != null && selectUser.getUserPwd().equals(user.getUserPwd())) {
             user.setUserValid(selectUser.getUserValid());
+            user.setUserId(selectUser.getUserId());
             return true;
         }
         return false;
@@ -94,4 +95,10 @@ public class UserServerImpl implements UserServer {
         }
         return false;
     }
+
+    @Override
+    public String getUserName(Integer userId) {
+        return userMapper.selectByPrimaryKey(userId).getUserName();
+    }
+
 }

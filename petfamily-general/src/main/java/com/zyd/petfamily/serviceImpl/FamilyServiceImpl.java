@@ -166,7 +166,7 @@ public class FamilyServiceImpl implements FamilyService {
         familyInfo.setFamilyLng(familyInfoRequest.getFamilyLng());
         familyInfo.setFamilyName(familyInfoRequest.getFamilyName());
         familyInfo.setUserId(familyInfoRequest.getUserId());
-        familyInfo.setFamilyPhone(familyInfo.getFamilyPhone());
+        familyInfo.setFamilyPhone(familyInfoRequest.getFamilyPhone());
         familyInfo.setFamilyCommentCount(familyInfoRequest.getFamilyCommentCount() == null ? 0 : familyInfoRequest.getFamilyCommentCount());
         familyInfo.setFamilyCommentStar(familyInfoRequest.getFamilyCommentStar() == null ? new Double(0) : familyInfoRequest.getFamilyCommentStar());
         return familyInfo;

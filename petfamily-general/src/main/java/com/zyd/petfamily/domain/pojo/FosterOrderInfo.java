@@ -7,10 +7,10 @@ import java.util.Date;
 public class FosterOrderInfo {
     private Integer orderInfoId;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd", timezone="GMT+8")
     private Date orderStart;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
+    @JsonFormat(pattern="yyyy-MM-dd", timezone="GMT+8")
     private Date orderEnd;
 
     private Float orderMoney;

@@ -52,7 +52,7 @@ public class UserController {
         //返回用户id
         response.setData(user.getUserId());
         response.setStatus(CodeUtil.SUCCESS_CODE);
-        response.setMsg(CodeUtil.SUCCESS_MSG);
+        response.setMsg("注册成功!");
 
         log.debug("注册用户 " + user.getUserId() + "成功！");
 
@@ -124,6 +124,21 @@ public class UserController {
         log.info("修改用户{} 的信息", user.getUserId());
         if(userServerImpl.updateUser(user)){
             return new CommonResponse(CodeUtil.SUCCESS_CODE, user, "修改成功！");
+        }
+        return new CommonResponse(CodeUtil.FAILE_CODE, CodeUtil.FAILE_MSG);
+    }
+
+    /**
+     * 获取用户名称
+     * @param userId
+     * @return
+     */
+    @RequestMapping("/userName")
+    public CommonResponse userName(Integer userId){
+        log.info("获取用户{} 的名称", userId);
+        String userName = userServerImpl.getUserName(userId);
+        if(userName != null && !userName.equals("")){
+            return new CommonResponse(CodeUtil.SUCCESS_CODE, userName, CodeUtil.SUCCESS_MSG);
         }
         return new CommonResponse(CodeUtil.FAILE_CODE, CodeUtil.FAILE_MSG);
     }
